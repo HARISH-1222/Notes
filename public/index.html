@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <nav></nav>
+    <div id="insert-div">
+        <form id="myList">
+            <label>Enter the Note that you want to Add :</label><br>
+            <input name="note" class="inp-note">
+        </form>
+        <button id="btn">Add</button>
+    </div>
+    <div id="list">
+      <h3>Todo :</h3>
+        <ul class="text-content">
+            
+        </ul>
+    </div>
+    <!-- <button onclick="delete()">Delete</button> -->
+    <a href="#"><button onclick="deleteFun()">Delete</button></a>
+    <!-- <div><button id="sub-note">Submit</button></div> -->
+    <!-- <div><a id="show-note"> -->
+      <!-- <button onclick="">Show Data</button> -->
+    <!-- </a></div> -->
+    <script>
+      
+const btn = document.getElementById("btn");
+const inpList = document.getElementById("list");
+
+const textCont = document.querySelector(".text-content");
+
+const myList = document.getElementById("myList");
+
+const subNote = document.getElementById("sub-note");
+
+function deleteFun(){
+  fetch('/delete')
+  .then(response => {
+    if(response.ok) return response.json();
+    else{
+      throw new Error("Error");
+    }
+  })
+  .then(data => {
+    // console.log("Data : ",data);
+    for(i of data)
+      textCont.innerHTML += `<li>${i.list}</li>`;
+  })
+  .catch(error => console.error());
+
+
+  fetch('/show')
+  .then(response => {
+    if(response.ok) return response.json();
+    else{
+      throw new Error("Error");
+    }
+  })
+  .then(data => {
+    // console.log("Data : ",data);
+    for(i of data)
+      textCont.innerHTML += `<li>${i.list}</li>`;
+  })
+  .catch(error => console.error());
+
+}
+
+let data = {"msg":""};
+btn.addEventListener("click",()=>{
+    let note = document.querySelector(".inp-note").value;
+    console.log("when click input",note);
+    textCont.innerHTML += `<li>${note}</li>`;
+    // data.push(note);
+    data.msg = note;
+    postFun();
+  })
+
+
+fetch('/show')
+  .then(response => {
+    if(response.ok) return response.json();
+    else{
+      throw new Error("Error");
+    }
+  })
+  .then(data => {
+    // console.log("Data : ",data);
+    for(i of data)
+      textCont.innerHTML += `<li>${i.list}</li>`;
+  })
+  .catch(error => console.error());
+
+//
+
+function postFun(){
+  console.log("For post",data);
+  fetch('/submit-form', {
+    method: 'POST',
+    headers:{"content-type":"application/json"},
+    body: JSON.stringify(data)
+  })
+  .then(res => {return res})
+  .catch(error => {
+    console.error('Error:', error);
+  });
+}
+    </script>
+
+    <!-- <script src="script.js"></script> -->
+</body>
+</html>

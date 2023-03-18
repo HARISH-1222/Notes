@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <label>Enter Your userName :</label>
+        <input name="username" class="userName" type="text"><br>
+        <label>Enter Your Password :</label>        
+        <input name="password" class="userPass" type="password">
+
+    </form>
+    <button id="btn-create">create</button>
+
+    <script>
+        const btnCreate = document.getElementById("btn-create");
+        const userName = document.querySelector(".userName");
+        const userPass = document.querySelector(".userPass");
+
+        
+        btnCreate.addEventListener("click",()=>{
+
+            console.log("username ",userName.value);
+            console.log("userpassword ",userPass.value);
+        });
+    </script>
+</body>
+</html>
