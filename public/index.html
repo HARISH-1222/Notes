@@ -39,6 +39,7 @@ const myList = document.getElementById("myList");
 const subNote = document.getElementById("sub-note");
 
 function deleteFun(){
+  textCont.innerHTML = ``;
   fetch('/delete')
   .then(response => {
     if(response.ok) return response.json();
@@ -46,13 +47,7 @@ function deleteFun(){
       throw new Error("Error");
     }
   })
-  .then(data => {
-    // console.log("Data : ",data);
-    for(i of data)
-      textCont.innerHTML += `<li>${i.list}</li>`;
-  })
-  .catch(error => console.error());
-
+  
 
   fetch('/show')
   .then(response => {
